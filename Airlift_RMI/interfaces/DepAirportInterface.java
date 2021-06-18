@@ -103,7 +103,7 @@ public interface DepAirportInterface extends Remote{
 		*
 		*/
 
-		public Boolean CheckEndOfDay() throws RemoteException;
+		public boolean CheckEndOfDay() throws RemoteException;
 		
 		/**
 		*  Operation wait for next flight.

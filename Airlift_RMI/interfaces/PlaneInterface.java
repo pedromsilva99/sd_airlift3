@@ -85,7 +85,7 @@ public interface PlaneInterface extends Remote{
 	 *                              service fails
 	 */
 
-	 public void endOperation (int barberId) throws RemoteException;
+	public void endOperation (int barberId) throws RemoteException;
 
 	/**
 	 *   Operation server shutdown.
@@ -96,6 +96,6 @@ public interface PlaneInterface extends Remote{
 	 *                             service fails
 	 */
 
-	 public void shutdown () throws RemoteException;
+	public void shutdown () throws RemoteException;
 
 }

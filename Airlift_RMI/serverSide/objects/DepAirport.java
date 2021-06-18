@@ -4,7 +4,6 @@ import java.rmi.*;
 
 import interfaces.*;
 import serverSide.main.*;
-import clientSide.entities.*;
 import commInfra.*;
 import genclass.GenericIO;
 
@@ -22,7 +21,7 @@ import genclass.GenericIO;
  *    and the other one where he waits for the hostess to check his documents and to let him enter the plane. 
  */
 
-public class DepAirport {
+public class DepAirport implements DepAirportInterface{
 	
 	/**
 	* Control variable for the plane.
@@ -64,7 +63,19 @@ public class DepAirport {
 	* Reference to passenger threads.
 	*/
 
-	private final DepartureAirportProxy[] passen;
+	private final Thread[] passen;
+	
+	/**
+	 *  Reference to pilot thread.
+	 */
+
+	private final Thread[] pilot;
+	
+	/**
+	 *  Reference to hostess thread.
+	 */
+
+	private final Thread[] hostess;
 
    /**
 	* Waiting seats occupation.
@@ -99,10 +110,16 @@ public class DepAirport {
 	public DepAirport(GeneralReposInterface repos) {
 		
 		nLine = 0;
-		passen = new DepartureAirportProxy[SimulPar.nPassengers];
+		passen = new Thread[SimulPar.nPassengers];
+		pilot = new Thread[SimulPar.nPilots];
+		hostess = new Thread[SimulPar.nHostess];
 		
 		for (int i = 0; i < SimulPar.nPassengers; i++)
 			passen[i] = null;
+		for (int i = 0; i < SimulPar.nPilots; i++)
+			pilot[i] = null;
+		for (int i = 0; i < SimulPar.nHostess; i++)
+			hostess[i] = null;
 		
 		try {
 			waitingLine = new MemFIFO<>(new Integer[SimulPar.nPassengers]);
@@ -117,5 +134,168 @@ public class DepAirport {
 		
 	}
 	
+	/**
+	*  Operation wait in queue.
+	*
+	*  It is called by the passenger when he arrives to the airport.
+	*
+	*     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	*     service fails
+	*/	
+	
+	@Override
+	public synchronized void waitInQueue() {
+		
+	}
+	
+	/**
+	*  Operation show documents.
+	*
+	*  It is called by the passenger when the hostess wants to check his documents.
+	*  
+	*     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	*     service fails
+	*
+	*/	
+	
+	@Override
+	public synchronized void showDocuments() {
+		
+	}
+	
+	/**
+	*  Operation wait for next passenger.
+	*
+	*  It is called by the hostess when the plane isn't ready to fly and she has to wait for passengers.
+	*
+	*  @return passengerId returns the Id from the passenger that is in front of the queue.
+	*/	
+	
+	@Override
+	public synchronized int waitForNextPassenger() {
+		return 0;
+	}
+	
+	/**
+	*  Operation prepare for pass boarding.
+	*
+	*  It is called by the hostess when she is waiting for the plane to arrive to the transfer gate.
+	*
+	*  @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	*     service fails
+	*/
+	
+	@Override
+	public synchronized void prepareForPassBoarding() {
+		
+	}
+	
+	/**
+	*  Operation check documents.
+	*
+	*  It is called by the hostess to check the documents of the first passenger of the queue.
+	*
+	*  @param waitPassengerId receives the id of the passenger that is having his documents checked
+	*  
+	*  @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	*     service fails
+	*/
 
+	@Override
+	public synchronized void checkDocuments(int waitPassengerId) {
+		
+	}
+	
+	/**
+	*  Operation inform plane ready for boarding.
+	*
+	*  It is called by the pilot after parking the plane at the transfer gate.
+	*  
+	*  @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	*     service fails
+	*
+	*/
+	
+	@Override
+	public synchronized void informPlaneReadyForBoarding() {
+		
+	}
+	
+	/**
+	*  Operation park at transfer gate.
+	*
+	*  It is called by the pilot after the flight back to park the plane at the transfer gate.
+	*  
+	*  @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	*     service fails
+	*
+	*/
+	
+	@Override
+	public synchronized void parkAtTransferGate() {
+		
+	}
+	
+	/**
+	*  Operation check end of the day.
+	*
+	*  Checks if all the passengers have traveled to the destination airport.
+	*
+	*  @return true if all the passengers have traveled to the destination airport, false otherwise.
+	*  
+	*  @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	*     service fails
+	*
+	*/
+
+	@Override
+	public synchronized boolean CheckEndOfDay() {
+		return false;
+	}
+	
+	/**
+	*  Operation wait for next flight.
+	*
+	*  It is called by the hostess when the plane left the departure airport and 
+	*  she has to wait for the next flight to arrive.
+	*  
+	*  @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	*     service fails
+	*
+	*/
+
+	@Override
+	public synchronized void waitForNextFlight() {
+		
+	}
+	
+	/**
+	*  Operation end of work.
+	*
+	*   New operation.
+	*
+	*      @param barbId barber id
+	*      @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	*                              service fails
+	*/
+
+	@Override
+	public synchronized void endOperation (int barberId) {
+		
+	}
+	
+	/**
+	*   Operation server shutdown.
+	*
+	*   New operation.
+	*
+	*     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	*                             service fails
+	*/
+
+	@Override
+	public synchronized void shutdown () {
+		
+	}
+	
 }
