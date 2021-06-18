@@ -4,7 +4,6 @@ import java.rmi.registry.*;
 import java.rmi.*;
 import clientSide.entities.*;
 import interfaces.*;
-import clientSide.main.SimulPar;
 import genclass.GenericIO;
 
 /**

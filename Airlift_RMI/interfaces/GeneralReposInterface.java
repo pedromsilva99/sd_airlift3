@@ -11,28 +11,85 @@ import java.rmi.*;
 public interface GeneralReposInterface extends Remote{
 	
 	/**
-	   *   Operation initialization of simulation.
-	   *
-	   *   New operation.
-	   *
-	   *     @param logFileName name of the logging file
-	   *     @param nIter number of iterations of the customer life cycle
-	   *     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
-	   *                             service fails
-	   */
+	 *   Set pilot state.
+	 *
+	 *     @param state pilot state
+	 */
 
-	   public void initSimul (String logFileName, int nIter) throws RemoteException;
-
-	  /**
-	   *   Operation server shutdown.
-	   *
-	   *   New operation.
-	   *
-	   *     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
-	   *                             service fails
-	   */
-
-	   public void shutdown () throws RemoteException;
+	public void setPilotState (int state) throws RemoteException;
 	
+	/**
+	 *   Set passenger state.
+	 *
+	 *     @param id passenger id
+	 *     @param state passenger state
+	 */
+
+	public void setPassengerState (int id, int state) throws RemoteException;
+	
+	/**
+	 *   Set hostess state.
+	 *
+	 *     @param state hostess state
+	 *     
+	 */
+
+	public void setHostessState (int state) throws RemoteException;
+	
+	/**
+	 *   Set inQueue number.
+	 *
+	 *     @param number number to add to inQueue
+	 */
+
+	public void setQueue (int number) throws RemoteException;
+	
+	/**
+	 *   Set inFlight number.
+	 *
+	 *     @param number number to add to inFlight
+	 */
+
+	public void setFlight (int number) throws RemoteException;
+	
+	/**
+	 *   Set inDestination number.
+	 *
+	 *     @param number number to add to inDestination
+	 */
+
+	public void setDestisnation (int number) throws RemoteException;
+	
+	/**
+	 *   Write a specific state line at the end of the logging file, for example an message informing that
+	 *   the plane has arrived.
+	 *
+	 *     @param message message to write in the logging file
+	 */
+
+	public void reportSpecificStatus (String message) throws RemoteException;
+	
+	/**
+	 *   Operation initialization of simulation.
+	 *
+	 *   New operation.
+	 *
+	 *     @param logFileName name of the logging file
+	 *     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	 *                             service fails
+	 */
+
+	public void initSimul (String logFileName) throws RemoteException;
+
+	/**
+	 *   Operation server shutdown.
+	 *
+	 *   New operation.
+	 *
+	 *     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	 *                             service fails
+	 */
+
+	public void shutdown () throws RemoteException;
 	
 }
