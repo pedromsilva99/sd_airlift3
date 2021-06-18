@@ -60,7 +60,7 @@ public class DestAirport implements DestAirportInterface{
 	 */
 	
 	@Override
-	public synchronized void flyToDeparturePoint () {
+	public synchronized void flyToDeparturePoint () throws RemoteException{
 		
 	}
 	
@@ -75,7 +75,7 @@ public class DestAirport implements DestAirportInterface{
 	 */
 
 	@Override
-	public synchronized void endOperation (int barberId) {
+	public synchronized void endOperation (int barberId) throws RemoteException{
 		
 	}
 	
@@ -89,7 +89,7 @@ public class DestAirport implements DestAirportInterface{
 	 */
 	
 	@Override
-	public synchronized void shutdown () {
+	public synchronized void shutdown () throws RemoteException{
 		
 	}
 

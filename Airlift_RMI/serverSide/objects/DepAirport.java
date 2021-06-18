@@ -144,7 +144,7 @@ public class DepAirport implements DepAirportInterface{
 	*/	
 	
 	@Override
-	public synchronized void waitInQueue() {
+	public synchronized void waitInQueue() throws RemoteException{
 		
 	}
 	
@@ -159,7 +159,7 @@ public class DepAirport implements DepAirportInterface{
 	*/	
 	
 	@Override
-	public synchronized void showDocuments() {
+	public synchronized void showDocuments() throws RemoteException{
 		
 	}
 	
@@ -172,7 +172,7 @@ public class DepAirport implements DepAirportInterface{
 	*/	
 	
 	@Override
-	public synchronized int waitForNextPassenger() {
+	public synchronized int waitForNextPassenger() throws RemoteException{
 		return 0;
 	}
 	
@@ -186,7 +186,7 @@ public class DepAirport implements DepAirportInterface{
 	*/
 	
 	@Override
-	public synchronized void prepareForPassBoarding() {
+	public synchronized void prepareForPassBoarding() throws RemoteException{
 		
 	}
 	
@@ -202,7 +202,7 @@ public class DepAirport implements DepAirportInterface{
 	*/
 
 	@Override
-	public synchronized void checkDocuments(int waitPassengerId) {
+	public synchronized void checkDocuments(int waitPassengerId) throws RemoteException{
 		
 	}
 	
@@ -217,7 +217,7 @@ public class DepAirport implements DepAirportInterface{
 	*/
 	
 	@Override
-	public synchronized void informPlaneReadyForBoarding() {
+	public synchronized void informPlaneReadyForBoarding() throws RemoteException{
 		
 	}
 	
@@ -232,7 +232,7 @@ public class DepAirport implements DepAirportInterface{
 	*/
 	
 	@Override
-	public synchronized void parkAtTransferGate() {
+	public synchronized void parkAtTransferGate() throws RemoteException{
 		
 	}
 	
@@ -249,7 +249,7 @@ public class DepAirport implements DepAirportInterface{
 	*/
 
 	@Override
-	public synchronized boolean CheckEndOfDay() {
+	public synchronized boolean CheckEndOfDay() throws RemoteException{
 		return false;
 	}
 	
@@ -265,7 +265,7 @@ public class DepAirport implements DepAirportInterface{
 	*/
 
 	@Override
-	public synchronized void waitForNextFlight() {
+	public synchronized void waitForNextFlight() throws RemoteException{
 		
 	}
 	
@@ -280,7 +280,7 @@ public class DepAirport implements DepAirportInterface{
 	*/
 
 	@Override
-	public synchronized void endOperation (int barberId) {
+	public synchronized void endOperation (int barberId) throws RemoteException{
 		
 	}
 	
@@ -294,7 +294,7 @@ public class DepAirport implements DepAirportInterface{
 	*/
 
 	@Override
-	public synchronized void shutdown () {
+	public synchronized void shutdown () throws RemoteException{
 		
 	}
 	

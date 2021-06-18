@@ -123,7 +123,7 @@ public class Plane implements PlaneInterface{
 	 */
 	
 	@Override
-	public synchronized void boardThePlane () {
+	public synchronized void boardThePlane () throws RemoteException{
 		
 	}
 	
@@ -136,7 +136,7 @@ public class Plane implements PlaneInterface{
 	*/
 	
 	@Override
-	public void waitForAllInBoard() {
+	public void waitForAllInBoard() throws RemoteException{
 		
 	}
 	
@@ -149,7 +149,7 @@ public class Plane implements PlaneInterface{
 	*/
 	
 	@Override
-	public void informPlaneReadyToTakeOff(int nboarded) {
+	public void informPlaneReadyToTakeOff(int nboarded) throws RemoteException{
 		
 	}
 	
@@ -161,7 +161,7 @@ public class Plane implements PlaneInterface{
 	*/	
 	
 	@Override
-	public synchronized void flyToDestinationPoint () {
+	public synchronized void flyToDestinationPoint () throws RemoteException{
 		
 	}
 
@@ -173,7 +173,7 @@ public class Plane implements PlaneInterface{
 	*/		
 	
 	@Override
-	public synchronized void announceArrival () {
+	public synchronized void announceArrival () throws RemoteException{
 		
 	}
 	
@@ -185,7 +185,7 @@ public class Plane implements PlaneInterface{
 	*/	
 	
 	@Override
-	public synchronized void leaveThePlane () {
+	public synchronized void leaveThePlane () throws RemoteException{
 		
 	}
 	
@@ -197,7 +197,7 @@ public class Plane implements PlaneInterface{
 	*/
 	
 	@Override
-	public synchronized void lastPrint() {
+	public synchronized void lastPrint() throws RemoteException{
 		
 	}
 	
@@ -212,7 +212,7 @@ public class Plane implements PlaneInterface{
 	 */
 
 	@Override
-	public synchronized void endOperation (int barberId) {
+	public synchronized void endOperation (int barberId) throws RemoteException{
 		 
 	}
 	 
@@ -226,7 +226,7 @@ public class Plane implements PlaneInterface{
 	 */
 
 	@Override
-	public synchronized void shutdown () {
+	public synchronized void shutdown () throws RemoteException{
 			 
 	}
 }
