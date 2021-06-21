@@ -168,7 +168,7 @@ public class GeneralRepos implements GeneralReposInterface{
 	}
 	
 	@Override
-	public void reportInitialStatus ()	 throws RemoteException{
+	public synchronized void reportInitialStatus ()	 throws RemoteException{
 		TextFile log = new TextFile ();                      // instantiation of a text file handler
 
 		if (!log.openForWriting (".", logFileName)){ 
@@ -194,7 +194,7 @@ public class GeneralRepos implements GeneralReposInterface{
 	 *  Internal operation.
 	 */
 	
-	public void reportStatus () throws RemoteException{
+	public synchronized void reportStatus () throws RemoteException{
 		TextFile log = new TextFile ();                      // instantiation of a text file handler
 
 		String lineStatus = "";                              // state line to be printed
