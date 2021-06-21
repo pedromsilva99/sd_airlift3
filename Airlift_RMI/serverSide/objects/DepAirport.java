@@ -155,7 +155,7 @@ public class DepAirport implements DepAirportInterface{
 	@Override
 	public synchronized void waitInQueue(int passengerId) throws RemoteException{
 		
-		passen[passengerId] = Thread.currentThread ();;
+		passen[passengerId] = Thread.currentThread ();
 				
 		try {
 			waitingLine.write(passengerId);
