@@ -301,7 +301,7 @@ public class DepAirport implements DepAirportInterface{
 
 	@Override
 	public synchronized void checkDocuments(int waitPassengerId) throws RemoteException{
-GenericIO.writelnString("\n\033[42m----Enter Check Documents----\033[0m");
+		GenericIO.writelnString("\n\033[42m----Enter Check Documents----\033[0m");
 		
 		int hostessState;
 		
@@ -315,7 +315,7 @@ GenericIO.writelnString("\n\033[42m----Enter Check Documents----\033[0m");
 		hostessState = HostessStates.CHECKPASSENGER;
 		
 		//error
-		//repos.setHostessState (hostessState,waitPassengerId );
+		repos.setHostessState (hostessState,waitPassengerId );
 
 		GenericIO.writelnString("Checking Doccuments of passenger " + waitPassengerId);
 		passenState[waitPassengerId] = PassengerStates.INFLIGHT;

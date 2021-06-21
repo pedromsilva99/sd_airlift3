@@ -37,6 +37,16 @@ public interface GeneralReposInterface extends Remote{
 	public void setHostessState (int state) throws RemoteException;
 	
 	/**
+	 *   Set hostess state.
+	 *
+	 *     @param state hostess state
+	 *     @param passengerId id for the log
+	 *     
+	 */
+
+	public void setHostessState (int state, int passengerId) throws RemoteException;
+	
+	/**
 	 *   Set inQueue number.
 	 *
 	 *     @param number number to add to inQueue
@@ -68,6 +78,26 @@ public interface GeneralReposInterface extends Remote{
 	 */
 
 	public void reportSpecificStatus (String message) throws RemoteException;
+	
+	
+	/**
+	 *  Write the header to the logging file.
+	 *
+	 *  The pilot is flying back, the passengers are going to the airport and the hostess is waiting for the flight
+	 *  Internal operation.
+	 */
+	
+	public void reportInitialStatus () throws RemoteException;
+	
+	/**
+	 *  Write a state line at the end of the logging file.
+	 *
+	 *  The current state of the pilot, hostess and passengers is organized in a line to be printed.
+	 *  Internal operation.
+	 */
+
+	public void reportStatus () throws RemoteException;
+	
 	
 	/**
 	 *   Operation initialization of simulation.
