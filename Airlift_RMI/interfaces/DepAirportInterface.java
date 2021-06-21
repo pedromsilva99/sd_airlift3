@@ -14,24 +14,28 @@ public interface DepAirportInterface extends Remote{
 		*  Operation wait in queue.
 		*
 		*  It is called by the passenger when he arrives to the airport.
+		*  
+		*  @param passengerId receives the id of the passenger that arrived to the queue
 		*
-		*     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
-		*     service fails
+		*  @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+		*  service fails
 		*/	
 		
-		public void waitInQueue() throws RemoteException;
+		public void waitInQueue(int passengerId) throws RemoteException;
 		
 		/**
 		*  Operation show documents.
 		*
 		*  It is called by the passenger when the hostess wants to check his documents.
 		*  
-		*     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
-		*     service fails
+		*  @param passengerId receives the id of the passenger that showed the documents
+		*  
+		*  @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+		*  service fails
 		*
 		*/	
 		
-		public void showDocuments() throws RemoteException;
+		public void showDocuments(int passengerId) throws RemoteException;
 		
 		/**
 		*  Operation wait for next passenger.

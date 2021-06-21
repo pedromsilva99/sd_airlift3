@@ -2,6 +2,7 @@ package serverSide.objects;
 
 import java.rmi.*;
 
+import clientSide.entities.*;
 import interfaces.*;
 import serverSide.main.*;
 import commInfra.*;
@@ -20,7 +21,7 @@ import genclass.GenericIO;
  *    where cutting chair while having his hair cut.
  */
 
-public class Plane implements PlaneInterface{
+public class Plane extends Thread implements PlaneInterface{
 	
 	/**
 	*  Number of passengers in the plane.
@@ -45,6 +46,12 @@ public class Plane implements PlaneInterface{
 
 	private final Thread[] passen;
 	
+	/**
+     *  State of the customers.
+     */
+
+    private final int [] passenState;
+    
 	/**
 	 *  Reference to pilot thread.
 	 */
@@ -97,9 +104,12 @@ public class Plane implements PlaneInterface{
 		passen = new Thread[SimulPar.nPassengers];
 		pilot = new Thread[SimulPar.nPilots];
 		hostess = new Thread[SimulPar.nHostess];
+		passenState = new int [SimulPar.nPassengers];
 		
-		for (int i = 0; i < SimulPar.nPassengers; i++)
+		for (int i = 0; i < SimulPar.nPassengers; i++) {
 			passen[i] = null;
+			passenState[i] = -1;
+		}
 		for (int i = 0; i < SimulPar.nPilots; i++)
 			pilot[i] = null;
 		for (int i = 0; i < SimulPar.nHostess; i++)
@@ -123,8 +133,22 @@ public class Plane implements PlaneInterface{
 	 */
 	
 	@Override
-	public synchronized void boardThePlane () throws RemoteException{
+	public synchronized void boardThePlane(int passengerId) throws RemoteException{
+		nPassengers++;										// the passenger sits on the plane
 		
+		passenState[passengerId] = PassengerStates.INFLIGHT;
+	    repos.setFlight(1);									
+	    repos.setQueue(-1);
+	    repos.setPassengerState (passengerId, passenState[passengerId]);
+	    GenericIO.writelnString ("\u001B[45mPASSENGER IN FLIGHT " + passengerId + "\u001B[0m");
+	    try { 
+	    	planeSeats.write (passengerId);                 // the passenger sits on the plane and waits for the end of the flight
+	    }
+	    catch (MemException e) {
+	    	GenericIO.writelnString ("Insertion of customer id in plane FIFO failed: " + e.getMessage ());
+	        System.exit (1);
+	    }
+	    notifyAll();   										// the passenger lets his presence be known
 	}
 	
 	/**
@@ -137,7 +161,22 @@ public class Plane implements PlaneInterface{
 	
 	@Override
 	public void waitForAllInBoard() throws RemoteException{
+		int pilotState;
+		pilotState = PilotStates.WAITINGFORBOARDING;
+		repos.setPilotState (pilotState);
+		while (!allOnBoard) 
+		{
+			try {
+				GenericIO.writelnString("\n\033[44mPilot Waiting for all Passengers\033[0m\n");
+				wait();
+			} 
+			catch (Exception e) {
+				return;
+			}
+		}	
 		
+		GenericIO.writelnString("Everybody on board");
+		GenericIO.writelnString("Passengers left: " + nPassengersLeft);
 	}
 	
 	/**
@@ -150,6 +189,22 @@ public class Plane implements PlaneInterface{
 	
 	@Override
 	public void informPlaneReadyToTakeOff(int nboarded) throws RemoteException{
+		System.out.println(nboarded);
+		while (nboarded!= nPassengers) {
+			try {
+				GenericIO.writelnString("\n\033[44mPilot Waiting for all Passengers\033[0m\n");
+				wait();
+			}
+			catch (Exception e) {
+				return;
+			}
+		}
+		
+		int hostessState;
+		hostessState = HostessStates.READYTOFLY;
+		repos.setHostessState (hostessState);
+		allOnBoard = true;
+		notifyAll();
 		
 	}
 	
@@ -162,7 +217,18 @@ public class Plane implements PlaneInterface{
 	
 	@Override
 	public synchronized void flyToDestinationPoint () throws RemoteException{
-		
+		try { 
+        	sleep ((long) (3 + 100 * Math.random ()));
+        }
+        catch (InterruptedException e) {}
+        GenericIO.writelnString ("NPassengers = "+nPassengers);
+        
+        flightNumber++;
+        nPassForFlight[flightNumber-1] = nPassengers;
+        int pilotState;
+        pilotState = PilotStates.FLYINGFORWARD;
+        repos.setPilotState (pilotState);
+        GenericIO.writelnString ("\u001B[45mPLANE FLYING TO DESTINATION AIRPORT \u001B[0m");
 	}
 
 	/**
@@ -174,7 +240,43 @@ public class Plane implements PlaneInterface{
 	
 	@Override
 	public synchronized void announceArrival () throws RemoteException{
-		
+		try {
+			   sleep ((long) (1 + 100 * Math.random ()));
+		   }
+		   catch (InterruptedException e) {}
+		   
+		   repos.reportSpecificStatus("\nFlight " + flightNumber +": arrived.");
+		   int pilotState;
+		   pilotState = PilotStates.DEBOARDING;
+		   repos.setPilotState (pilotState);
+		   GenericIO.writelnString ("PLANE ARRIVED");
+		   arrived = true;
+		   notifyAll();
+		   while (nPassengersLeft!=nPassengers) {
+			   try { 
+		    	  GenericIO.writelnString ("\n\033[0;34mPILOT waiting for passengers to leave the plane\033[0m\n");
+		    	  wait();        
+		        }
+		        catch (Exception e) { 	
+		        	return ;
+		        }
+		      }
+		    while(nPassengers >0) {
+		    	try{
+		    		planeSeats.read ();                   
+			      }
+			      catch (MemException e) {
+			    	  GenericIO.writelnString ("Removal of customer id in plane FIFO failed: " + e.getMessage ());
+			          System.exit (1);
+			      }
+		    	nPassengers--;
+		    }
+		    
+		    nPassengers=0;
+		    nPassengersLeft=0;
+		    allOnBoard = false;
+		    arrived=false; 
+		    
 	}
 	
 	/**
@@ -185,8 +287,26 @@ public class Plane implements PlaneInterface{
 	*/	
 	
 	@Override
-	public synchronized void leaveThePlane () throws RemoteException{
-		
+	public synchronized void leaveThePlane (int passengerId) throws RemoteException{
+		while (!arrived) {
+	    	try { 
+	    		GenericIO.writelnString ("\n\033[0;34mPassenger waiting for plane arrival\033[0m\n");
+		    	wait();        
+		    }
+		    catch (Exception e) { 	
+		    	System.exit(0);                 
+		    }
+	    }
+	      
+	    repos.setFlight(-1);
+	    repos.setDestisnation(1);
+	    nPassengersLeft++;
+	    notifyAll();
+	    passen[passengerId] = Thread.currentThread ();
+	    passenState[passengerId] = PassengerStates.ATDESTINATION;
+	    repos.setPassengerState (passengerId, passenState[passengerId]);
+	    
+	    GenericIO.writelnString ("\n\033[0;34mPassenger " + passengerId +" is on the destination\033[0m\n");
 	}
 	
 	/**
@@ -198,7 +318,11 @@ public class Plane implements PlaneInterface{
 	
 	@Override
 	public synchronized void lastPrint() throws RemoteException{
+		repos.reportSpecificStatus("\nAirlift sum up:");
 		
+		for (int i=1; i<=flightNumber; i++) {
+			repos.reportSpecificStatus("Flight " + i + " transported " + nPassForFlight[i-1] + " passengers");
+		}
 	}
 	
 	/**
@@ -227,6 +351,7 @@ public class Plane implements PlaneInterface{
 
 	@Override
 	public synchronized void shutdown () throws RemoteException{
-			 
+		ServerPlane.shutdown ();
+	    notifyAll ();   
 	}
 }

@@ -2,6 +2,7 @@ package serverSide.objects;
 
 import java.rmi.*;
 
+import clientSide.entities.*;
 import interfaces.*;
 import serverSide.main.*;
 import commInfra.*;
@@ -66,6 +67,12 @@ public class DepAirport implements DepAirportInterface{
 	private final Thread[] passen;
 	
 	/**
+     *  State of the customers.
+     */
+
+    private final int [] passenState;
+    
+	/**
 	 *  Reference to pilot thread.
 	 */
 
@@ -113,9 +120,11 @@ public class DepAirport implements DepAirportInterface{
 		passen = new Thread[SimulPar.nPassengers];
 		pilot = new Thread[SimulPar.nPilots];
 		hostess = new Thread[SimulPar.nHostess];
-		
-		for (int i = 0; i < SimulPar.nPassengers; i++)
+		passenState = new int [SimulPar.nPassengers];
+		for (int i = 0; i < SimulPar.nPassengers; i++) {
 			passen[i] = null;
+			passenState[i] = -1;
+		}
 		for (int i = 0; i < SimulPar.nPilots; i++)
 			pilot[i] = null;
 		for (int i = 0; i < SimulPar.nHostess; i++)
@@ -144,8 +153,33 @@ public class DepAirport implements DepAirportInterface{
 	*/	
 	
 	@Override
-	public synchronized void waitInQueue() throws RemoteException{
+	public synchronized void waitInQueue(int passengerId) throws RemoteException{
 		
+		passen[passengerId] = Thread.currentThread ();;
+				
+		try {
+			waitingLine.write(passengerId);
+		} 
+		catch (MemException e) {
+			GenericIO.writelnString("Insertion of customer id in waiting departure FIFO failed: " + e.getMessage());
+			System.exit(1);
+		}
+		
+		nLine++;
+		
+		GenericIO.writelnString("\033[0;91m" + "Pasenger " + passengerId + " waiting in queue in " + nLine + " position" + "\u001B[0m");
+		
+		passenState[passengerId] = PassengerStates.INQUEUE;
+		repos.setQueue(1);
+		repos.setPassengerState (passengerId, passenState[passengerId]);	
+		notifyAll();
+	
+		while (passengerId != calledPassengerId) {
+			try {
+				wait();
+			} 
+			catch (InterruptedException e) {}
+		}
 	}
 	
 	/**
@@ -159,8 +193,19 @@ public class DepAirport implements DepAirportInterface{
 	*/	
 	
 	@Override
-	public synchronized void showDocuments() throws RemoteException{
+	public synchronized void showDocuments(int passengerId) throws RemoteException{
 		
+		passen[passengerId] = Thread.currentThread ();
+
+		calledPassengerDocuments = passengerId;
+		GenericIO.writelnString("\033[42m-Passenger " + passengerId + " giving his doccuments\033[0m");
+		notifyAll();
+		while (passenState[passengerId] != PassengerStates.INFLIGHT) { 
+			try {
+				wait();
+			} 
+			catch (InterruptedException e) {}
+		}
 	}
 	
 	/**
@@ -173,7 +218,48 @@ public class DepAirport implements DepAirportInterface{
 	
 	@Override
 	public synchronized int waitForNextPassenger() throws RemoteException{
-		return 0;
+		
+		int hostessState;
+		GenericIO.writelnString("\033[41mPassengers in line " + nLine + "\033[0m");
+		hostessState = HostessStates.WAITFORPASSENGER;
+		repos.setHostessState (hostessState);
+		GenericIO.writelnString("\033[41mPassengers in nleft " + nLeft + "\033[0m");
+		GenericIO.writelnString("\033[41mPassengers in passengersOnBoard " + passengersOnBoard + "\033[0m");
+		
+		if ((passengersOnBoard >= SimulPar.minInPlane && nLine == 0) || passengersOnBoard == SimulPar.maxInPlane
+				|| ( nLine == 0 && nLeft==0)) {
+			notifyAll();
+			return -passengersOnBoard;
+		}
+		while (nLine == 0) {
+			try {
+				wait();
+			} 
+			catch (Exception e) {
+				return -SimulPar.nPassengers-1;
+			}
+		}
+		
+		if (nLine > 0)
+			nLine -= 1;
+
+		int passengerId;
+		
+		try {
+			passengerId = waitingLine.read();
+			if ((passengerId < 0) || (passengerId >= SimulPar.nPassengers))
+				throw new MemException("illegal customer id!");
+		} 
+		catch (MemException e) {
+			GenericIO.writelnString("Retrieval of customer id from waiting FIFO failed: " + e.getMessage());
+			passengerId = -SimulPar.nPassengers-1;
+			System.exit(1);
+		}
+		
+		calledPassengerId = passengerId;
+		notifyAll();
+
+		return passengerId;
 	}
 	
 	/**
@@ -187,7 +273,19 @@ public class DepAirport implements DepAirportInterface{
 	
 	@Override
 	public synchronized void prepareForPassBoarding() throws RemoteException{
+		while (!plane_ready_boarding){
+			
+			try {
+				GenericIO.writelnString("\n\033[0;34mHostess Waiting for Plane\033[0m\n");
+				wait();
+			} 
+			catch (Exception e) {}
+			
+		}
 		
+		next_fly = false;
+		plane_ready_boarding = false;
+		passengersOnBoard = 0;
 	}
 	
 	/**
@@ -203,7 +301,29 @@ public class DepAirport implements DepAirportInterface{
 
 	@Override
 	public synchronized void checkDocuments(int waitPassengerId) throws RemoteException{
+GenericIO.writelnString("\n\033[42m----Enter Check Documents----\033[0m");
 		
+		int hostessState;
+		
+		while (waitPassengerId != calledPassengerDocuments) {
+			try {
+				wait();
+			} 
+			catch (InterruptedException e) {}
+		}	
+		
+		hostessState = HostessStates.CHECKPASSENGER;
+		
+		//error
+		//repos.setHostessState (hostessState,waitPassengerId );
+
+		GenericIO.writelnString("Checking Doccuments of passenger " + waitPassengerId);
+		passenState[waitPassengerId] = PassengerStates.INFLIGHT;
+		passengersOnBoard++;
+		nLeft--;
+		notifyAll();
+				
+		GenericIO.writelnString("Passengers on Board " + passengersOnBoard);
 	}
 	
 	/**
@@ -219,6 +339,15 @@ public class DepAirport implements DepAirportInterface{
 	@Override
 	public synchronized void informPlaneReadyForBoarding() throws RemoteException{
 		
+		int pilotState;
+		flightNumber++;
+		repos.reportSpecificStatus("\nFlight " + flightNumber + ": boarding started."); 
+		 
+		pilotState = PilotStates.READYFORBOARDING;
+		repos.setPilotState (pilotState);
+		plane_ready_boarding = true;
+		GenericIO.writelnString("Plane ready to flight");
+		notifyAll();
 	}
 	
 	/**
@@ -234,6 +363,13 @@ public class DepAirport implements DepAirportInterface{
 	@Override
 	public synchronized void parkAtTransferGate() throws RemoteException{
 		
+		int pilotState;
+		
+		pilotState = PilotStates.ATTRANSFERGATE;
+		repos.setPilotState (pilotState);
+		GenericIO.writelnString("PLANE AT TRANSFER GATE");
+		next_fly = true;
+		notifyAll();
 	}
 	
 	/**
@@ -250,7 +386,7 @@ public class DepAirport implements DepAirportInterface{
 
 	@Override
 	public synchronized boolean CheckEndOfDay() throws RemoteException{
-		return false;
+		return nLeft == 0;
 	}
 	
 	/**
@@ -267,6 +403,19 @@ public class DepAirport implements DepAirportInterface{
 	@Override
 	public synchronized void waitForNextFlight() throws RemoteException{
 		
+		int hostessState;
+		hostessState = HostessStates.WAITFORFLIGHT;
+		repos.setHostessState (hostessState); 
+		while (!next_fly) {
+			
+			try {
+				wait();
+			} 
+			catch (Exception e) {
+				return;
+			}
+			
+		}
 	}
 	
 	/**
@@ -295,7 +444,8 @@ public class DepAirport implements DepAirportInterface{
 
 	@Override
 	public synchronized void shutdown () throws RemoteException{
-		
+		ServerDepAirport.shutdown ();
+	    notifyAll ();                                       
 	}
 	
 }

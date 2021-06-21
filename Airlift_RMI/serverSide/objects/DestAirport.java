@@ -2,6 +2,8 @@ package serverSide.objects;
 
 import java.rmi.*;
 
+import clientSide.entities.PilotStates;
+import genclass.GenericIO;
 import interfaces.*;
 import serverSide.main.*;
 
@@ -9,7 +11,7 @@ import serverSide.main.*;
  * Destination Airport shared Region
  */
 
-public class DestAirport implements DestAirportInterface{
+public class DestAirport extends Thread implements DestAirportInterface{
 	
 	/**
 	* Reference to passenger threads.
@@ -62,6 +64,16 @@ public class DestAirport implements DestAirportInterface{
 	@Override
 	public synchronized void flyToDeparturePoint () throws RemoteException{
 		
+		int pilotState;
+		
+		try{ 
+			sleep ((long) (3 + 100 * Math.random ()));
+		}
+		catch (InterruptedException e) {}
+
+		pilotState = PilotStates.FLYINGBACK;
+		repos.setPilotState (pilotState);
+		GenericIO.writelnString ("\u001B[45mPLANE FLYING TO DEPARTURE AIRPORT \u001B[0m");
 	}
 	
 	/**

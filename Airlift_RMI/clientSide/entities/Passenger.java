@@ -124,7 +124,7 @@ public class Passenger extends Thread{
 	
 	private void waitInQueue(){
 		try
-	    { depAirportStub.waitInQueue();
+	    { depAirportStub.waitInQueue(passengerId);
 	    }
 	    catch (RemoteException e)
 	    { GenericIO.writelnString ("Passenger "+ passengerId + " remote exception on waitInQueue: " + e.getMessage ());
@@ -134,7 +134,7 @@ public class Passenger extends Thread{
 	
 	private void showDocuments(){
 		try
-	    { depAirportStub.showDocuments();
+	    { depAirportStub.showDocuments(passengerId);
 	    }
 	    catch (RemoteException e)
 	    { GenericIO.writelnString ("Passenger "+ passengerId + " remote exception on showDocuments: " + e.getMessage ());
@@ -145,7 +145,7 @@ public class Passenger extends Thread{
 
 	private void boardThePlane(){
 		try
-	    { planeStub.boardThePlane();
+	    { planeStub.boardThePlane(passengerId);
 	    }
 	    catch (RemoteException e)
 	    { GenericIO.writelnString ("Passenger "+ passengerId + " remote exception on boardThePlane: " + e.getMessage ());
@@ -155,7 +155,7 @@ public class Passenger extends Thread{
 	
 	private void leaveThePlane(){
 		try
-	    { planeStub.leaveThePlane();
+	    { planeStub.leaveThePlane(passengerId);
 	    }
 	    catch (RemoteException e)
 	    { GenericIO.writelnString ("Passenger "+ passengerId + " remote exception on leaveThePlane: " + e.getMessage ());
