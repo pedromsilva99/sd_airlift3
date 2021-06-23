@@ -120,52 +120,52 @@ public class ClientHostess {
 	     /* waiting for the end of the simulation */
 
 	      
-	      while (hostess.isAlive ()) { 
-	    	  try{ 
-	    		  depAirportStub.endOperation(1);
-	          }
-	          catch (RemoteException e)
-	          { GenericIO.writelnString ("Hostess generator remote exception on Departure Airport endOperation: " + e.getMessage ());
-	            System.exit (1);
-	          }
-	    	  try{ 
-	    		  planeStub.endOperation(1);
-	          }
-	          catch (RemoteException e)
-	          { GenericIO.writelnString ("Hostess generator remote exception on Plane endOperation: " + e.getMessage ());
-	            System.exit (1);
-	          }
-	          Thread.yield ();
-	      }
-	      try{
-	    	  hostess.join ();
-	      }
-	      catch (InterruptedException e) {}
-	      GenericIO.writelnString ("The hostess has terminated.");
-	     
-	      GenericIO.writelnString ();
-
-	      try
-	      { depAirportStub.shutdown ();
-	      }
-	      catch (RemoteException e)
-	      { GenericIO.writelnString ("Hostess generator remote exception on Departure Airport shutdown: " + e.getMessage ());
-	        System.exit (1);
-	      }
-	      try
-	      { planeStub.shutdown();
-	      }
-	      catch (RemoteException e)
-	      { GenericIO.writelnString ("Hostess generator remote exception on Plane shutdown: " + e.getMessage ());
-	        System.exit (1);
-	      }
-	      try
-	      { reposStub.shutdown ();
-	      }
-	      catch (RemoteException e)
-	      { GenericIO.writelnString ("Hostess generator remote exception on GeneralRepos shutdown: " + e.getMessage ());
-	        System.exit (1);
-	      }
+//	      while (hostess.isAlive ()) { 
+//	    	  try{ 
+//	    		  depAirportStub.endOperation(1);
+//	          }
+//	          catch (RemoteException e)
+//	          { GenericIO.writelnString ("Hostess generator remote exception on Departure Airport endOperation: " + e.getMessage ());
+//	            System.exit (1);
+//	          }
+//	    	  try{ 
+//	    		  planeStub.endOperation(1);
+//	          }
+//	          catch (RemoteException e)
+//	          { GenericIO.writelnString ("Hostess generator remote exception on Plane endOperation: " + e.getMessage ());
+//	            System.exit (1);
+//	          }
+//	          Thread.yield ();
+//	      }
+//	      try{
+//	    	  hostess.join ();
+//	      }
+//	      catch (InterruptedException e) {}
+//	      GenericIO.writelnString ("The hostess has terminated.");
+//	     
+//	      GenericIO.writelnString ();
+//
+//	      try
+//	      { depAirportStub.shutdown ();
+//	      }
+//	      catch (RemoteException e)
+//	      { GenericIO.writelnString ("Hostess generator remote exception on Departure Airport shutdown: " + e.getMessage ());
+//	        System.exit (1);
+//	      }
+//	      try
+//	      { planeStub.shutdown();
+//	      }
+//	      catch (RemoteException e)
+//	      { GenericIO.writelnString ("Hostess generator remote exception on Plane shutdown: " + e.getMessage ());
+//	        System.exit (1);
+//	      }
+//	      try
+//	      { reposStub.shutdown ();
+//	      }
+//	      catch (RemoteException e)
+//	      { GenericIO.writelnString ("Hostess generator remote exception on GeneralRepos shutdown: " + e.getMessage ());
+//	        System.exit (1);
+//	      }
 	
 	
 	}
