@@ -51,11 +51,11 @@ public class ClientPilot {
 	     /* problem initialization */
 	     String nameEntryGeneralRepos = "GeneralRepository";            // public name of the general repository object
 	     GeneralReposInterface reposStub = null;                        // remote reference to the general repository object
-	     String nameEntryDepAirport = "DepAirport";                     // public name of the departure airport object
+	     String nameEntryDepAirport = "DepartureAirport";                     // public name of the departure airport object
 	     DepAirportInterface depAirportStub = null;                     // remote reference to the departure airport object
 	     String nameEntryPlane = "Plane";                    			// public name of the plane object
 	     PlaneInterface planeStub = null;                     			// remote reference to the plane object
-	     String nameEntryDestAirport = "Plane";                    		// public name of the destination airport object
+	     String nameEntryDestAirport = "DestinationAirport";                    		// public name of the destination airport object
 	     DestAirportInterface destAirportStub = null;                   // remote reference to the destination airport object
 	     Registry registry = null;                                      // remote reference for registration in the RMI registry service
 	     Pilot pilot;                    								// pilot thread
@@ -135,7 +135,7 @@ public class ClientPilot {
 	     /* waiting for the end of the simulation */
 
 	      
-	      while (pilot.isAlive ()) { 
+	     while (pilot.isAlive ()) { 
 	    	  try{ 
 	    		  depAirportStub.endOperation(1);
 	          }
@@ -163,7 +163,7 @@ public class ClientPilot {
 	    	  pilot.join ();
 	      }
 	      catch (InterruptedException e) {}
-	      GenericIO.writelnString ("The hostess has terminated.");
+	      GenericIO.writelnString ("The pilot has terminated.");
 	     
 	      GenericIO.writelnString ();
 	      

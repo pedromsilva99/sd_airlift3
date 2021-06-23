@@ -52,7 +52,7 @@ public class ClientPassenger {
 	     /* problem initialization */
 	     String nameEntryGeneralRepos = "GeneralRepository";            // public name of the general repository object
 	     GeneralReposInterface reposStub = null;                        // remote reference to the general repository object
-	     String nameEntryDepAirport = "DepAirport";                     // public name of the departure airport object
+	     String nameEntryDepAirport = "DepartureAirport";               // public name of the departure airport object
 	     DepAirportInterface depAirportStub = null;                     // remote reference to the departure airport object
 	     String nameEntryPlane = "Plane";                    			// public name of the plane object
 	     PlaneInterface planeStub = null;                     			// remote reference to the plane object
