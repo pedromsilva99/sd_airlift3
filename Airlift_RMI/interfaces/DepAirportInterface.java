@@ -121,30 +121,6 @@ public interface DepAirportInterface extends Remote{
 		*/
 
 		public void waitForNextFlight() throws RemoteException;
-		
-		/**
-		*  Operation is ready to fly.
-		*
-		*  It is called by the hostess when she wants to know if the plane is ready to fly
-		*  
-		*  @throws RemoteException if either the invocation of the remote method, or the communication with the registry
-		*     service fails
-		*
-		*/
-		
-		public boolean isReadyToFly() throws RemoteException;
-		
-		/**
-		*  Operation end of work.
-		*
-		*   New operation.
-		*
-		*      @param barbId barber id
-		*      @throws RemoteException if either the invocation of the remote method, or the communication with the registry
-		*                              service fails
-		*/
-
-		public void endOperation (int barberId) throws RemoteException;
 
 		/**
 		*   Operation server shutdown.

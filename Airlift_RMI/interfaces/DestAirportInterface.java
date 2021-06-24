@@ -18,18 +18,6 @@ public interface DestAirportInterface extends Remote{
 	 */
 	   
 	public  void flyToDeparturePoint () throws RemoteException;
-	   
-	/**
-	 *  Operation end of work.
-	 *
-	 *   New operation.
-	 *
-	 *      @param barbId barber id
-	 *      @throws RemoteException if either the invocation of the remote method, or the communication with the registry
-	 *                              service fails
-	 */
-
-	 public void endOperation (int barberId) throws RemoteException;
 
 	/**
 	 *   Operation server shutdown.

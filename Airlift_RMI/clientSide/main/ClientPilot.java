@@ -134,68 +134,40 @@ public class ClientPilot {
 
 	     /* waiting for the end of the simulation */
 
-	      
-	    //  while (pilot.isAlive ()) { 
-	    // 	  try{ 
-	    // 		  depAirportStub.endOperation(1);
-	    //       }
-	    //       catch (RemoteException e)
-	    //       { GenericIO.writelnString ("Pilot generator remote exception on Departure Airport endOperation: " + e.getMessage ());
-	    //         System.exit (1);
-	    //       }
-	    // 	  try{ 
-	    // 		  planeStub.endOperation(1);
-	    //       }
-	    //       catch (RemoteException e)
-	    //       { GenericIO.writelnString ("Pilot generator remote exception on Plane endOperation: " + e.getMessage ());
-	    //         System.exit (1);
-	    //       }
-	    // 	  try{ 
-	    // 		  destAirportStub.endOperation(1);
-	    //       }
-	    //       catch (RemoteException e)
-	    //       { GenericIO.writelnString ("Pilot generator remote exception on Destination Airport endOperation: " + e.getMessage ());
-	    //         System.exit (1);
-	    //       }
-	    //       Thread.yield ();
-	    //   }
-	    //   try{
-	    // 	  pilot.join ();
-	    //   }
-	    //   catch (InterruptedException e) {}
-	    //   GenericIO.writelnString ("The pilot has terminated.");
+	       try{
+	     	  pilot.join ();
+	       }
+	       catch (InterruptedException e) {}
+	       GenericIO.writelnString ("The pilot has terminated.");
 	     
-	    //   GenericIO.writelnString ();
+	       GenericIO.writelnString ();
 	      
-	    //   try
-	    //   { depAirportStub.shutdown ();
-	    //   }
-	    //   catch (RemoteException e)
-	    //   { GenericIO.writelnString ("Pilot generator remote exception on Departure Airport shutdown: " + e.getMessage ());
-	    //     System.exit (1);
-	    //   }
-	    //   try
-	    //   { planeStub.shutdown();
-	    //   }
-	    //   catch (RemoteException e)
-	    //   { GenericIO.writelnString ("Pilot generator remote exception on Plane shutdown: " + e.getMessage ());
-	    //     System.exit (1);
-	    //   }
-	    //   try
-	    //   { destAirportStub.shutdown();
-	    //   }
-	    //   catch (RemoteException e)
-	    //   { GenericIO.writelnString ("Pilot generator remote exception on Destination Airport shutdown: " + e.getMessage ());
-	    //     System.exit (1);
-	    //   }
-	    //   try
-	    //   { reposStub.shutdown ();
-	    //   }
-	    //   catch (RemoteException e)
-	    //   { GenericIO.writelnString ("Pilot generator remote exception on GeneralRepos shutdown: " + e.getMessage ());
-	    //     System.exit (1);
-	    //   }
-	      
+	       try
+	       { depAirportStub.shutdown ();
+	       }
+	       catch (RemoteException e)
+	       { GenericIO.writelnString ("Pilot generator remote exception on Departure Airport shutdown: " + e.getMessage ()); 
+	       }
+	       try
+	       { planeStub.shutdown();
+	       }
+	       catch (RemoteException e)
+	       { GenericIO.writelnString ("Pilot generator remote exception on Plane shutdown: " + e.getMessage ());
+	       }
+	       try
+	       { destAirportStub.shutdown();
+	       }
+	       catch (RemoteException e)
+	       { GenericIO.writelnString ("Pilot generator remote exception on Destination Airport shutdown: " + e.getMessage ());        
+	       }
+	       try
+	       { reposStub.shutdown ();
+	       }
+	       catch (RemoteException e)
+	       { GenericIO.writelnString ("Pilot generator remote exception on GeneralRepos shutdown: " + e.getMessage ());
+	         System.exit (1);
+	       }
+	       
 	      
 	}
 

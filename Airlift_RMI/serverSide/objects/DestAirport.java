@@ -77,21 +77,6 @@ public class DestAirport extends Thread implements DestAirportInterface{
 	}
 	
 	/**
-	 *  Operation end of work.
-	 *
-	 *   New operation.
-	 *
-	 *      @param barbId barber id
-	 *      @throws RemoteException if either the invocation of the remote method, or the communication with the registry
-	 *                              service fails
-	 */
-
-	@Override
-	public synchronized void endOperation (int barberId) throws RemoteException{
-		
-	}
-	
-	/**
 	 *   Operation server shutdown.
 	 *
 	 *   New operation.
@@ -102,7 +87,8 @@ public class DestAirport extends Thread implements DestAirportInterface{
 	
 	@Override
 	public synchronized void shutdown () throws RemoteException{
-		
+		ServerDestAirport.shutdown ();
+	    notifyAll ();    
 	}
 
 }

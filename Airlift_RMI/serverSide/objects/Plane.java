@@ -324,21 +324,6 @@ public class Plane extends Thread implements PlaneInterface{
 			repos.reportSpecificStatus("Flight " + i + " transported " + nPassForFlight[i-1] + " passengers");
 		}
 	}
-	
-	/**
-	 *  Operation end of work.
-	 *
-	 *   New operation.
-	 *
-	 *      @param barbId barber id
-	 *      @throws RemoteException if either the invocation of the remote method, or the communication with the registry
-	 *                              service fails
-	 */
-
-	@Override
-	public synchronized void endOperation (int barberId) throws RemoteException{
-		 
-	}
 	 
 	/**
 	 *   Operation server shutdown.

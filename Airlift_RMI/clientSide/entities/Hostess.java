@@ -191,16 +191,5 @@ public class Hostess extends Thread{
 	    }
 		return endOfDay;
 	}
-	
-	private boolean isReadyToFly() {
-		boolean isReady = false;
-		try
-	    { isReady = depAirportStub.isReadyToFly();
-	    }
-	    catch (RemoteException e)
-	    { GenericIO.writelnString ("Hostess remote exception on isReadyToFly: " + e.getMessage ());
-	      System.exit (1);
-	    }
-		return isReady;
-	}
+
 }
