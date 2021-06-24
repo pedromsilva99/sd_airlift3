@@ -168,7 +168,6 @@ public class Plane extends Thread implements PlaneInterface{
 		{
 			try {
 				GenericIO.writelnString("\n\033[44mPilot Waiting for all Passengers\033[0m\n");
-				GenericIO.writelnString("\n\033[44mYOOOOOOOOOOO\033[0m" + allOnBoard + "\n");
 				wait();
 				
 			} 
@@ -201,7 +200,6 @@ public class Plane extends Thread implements PlaneInterface{
 				return;
 			}
 		}
-		System.out.print("FUCK THE POLICE");
 		int hostessState;
 		hostessState = HostessStates.READYTOFLY;
 		repos.setHostessState (hostessState);
