@@ -4,6 +4,7 @@ import java.rmi.*;
 
 import interfaces.*;
 import clientSide.main.SimulPar;
+import clientSide.entities.HostessStates;
 import genclass.GenericIO;
 
 /**
@@ -105,7 +106,6 @@ public class Hostess extends Thread{
 		GenericIO.writelnString("\nHostess RUN\n");
 		while (!endOfDay) {
 			prepareForPassBoarding();
-
 			while (hostessState != HostessStates.READYTOFLY) {
 				int waitPassengerId = waitForNextPassenger();
 				if (waitPassengerId >= 0)
@@ -114,10 +114,10 @@ public class Hostess extends Thread{
 					GenericIO.writelnString("ERROR");
 					System.exit(0);
 				} else {
-					
 					informPlaneReadyToTakeOff(waitPassengerId*-1);
 				}
 			}
+			System.out.print("ENTRA");
 			waitForNextFlight();
 			endOfDay = CheckEndOfDay();
 		}
@@ -143,6 +143,7 @@ public class Hostess extends Thread{
 	    { GenericIO.writelnString ("Hostess remote exception on waitForNextPassenger: " + e.getMessage ());
 	      System.exit (1);
 	    }
+		hostessState = HostessStates.WAITFORPASSENGER;
 		return waitPassengerId;
 	}
 	
@@ -154,6 +155,7 @@ public class Hostess extends Thread{
 	    { GenericIO.writelnString ("Hostess remote exception on checkDocuments: " + e.getMessage ());
 	      System.exit (1);
 	    }
+		hostessState = HostessStates.CHECKPASSENGER;
 	}
 	
 	private void informPlaneReadyToTakeOff(int waitPassengerId) {
@@ -164,6 +166,7 @@ public class Hostess extends Thread{
 	    { GenericIO.writelnString ("Hostess remote exception on informPlaneReadyToTakeOff: " + e.getMessage ());
 	      System.exit (1);
 	    }
+		hostessState = HostessStates.READYTOFLY;
 	}
 
 	private void waitForNextFlight() {
@@ -174,6 +177,7 @@ public class Hostess extends Thread{
 	    { GenericIO.writelnString ("Hostess remote exception on waitForNextFlight: " + e.getMessage ());
 	      System.exit (1);
 	    }
+		hostessState = HostessStates.WAITFORFLIGHT;
 	}
 	
 	private boolean CheckEndOfDay() {
@@ -186,5 +190,17 @@ public class Hostess extends Thread{
 	      System.exit (1);
 	    }
 		return endOfDay;
+	}
+	
+	private boolean isReadyToFly() {
+		boolean isReady = false;
+		try
+	    { isReady = depAirportStub.isReadyToFly();
+	    }
+	    catch (RemoteException e)
+	    { GenericIO.writelnString ("Hostess remote exception on isReadyToFly: " + e.getMessage ());
+	      System.exit (1);
+	    }
+		return isReady;
 	}
 }

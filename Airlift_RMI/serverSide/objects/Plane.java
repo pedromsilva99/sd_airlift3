@@ -100,7 +100,7 @@ public class Plane extends Thread implements PlaneInterface{
  	
 	public Plane (GeneralReposInterface repos) {
 		
-		nPassForFlight = new int [21];
+		nPassForFlight = new int [5];
 		passen = new Thread[SimulPar.nPassengers];
 		pilot = new Thread[SimulPar.nPilots];
 		hostess = new Thread[SimulPar.nHostess];
