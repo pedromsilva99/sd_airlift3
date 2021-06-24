@@ -21,6 +21,7 @@ public class ClientHostess {
 	 *    @param args runtime arguments
 	 *        args[0] - name of the platform where is located the RMI registering service
 	 *        args[1] - port number where the registering service is listening to service requests
+	 *        
 	 */
 
 

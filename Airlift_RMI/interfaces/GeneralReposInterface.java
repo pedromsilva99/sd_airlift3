@@ -14,6 +14,9 @@ public interface GeneralReposInterface extends Remote{
 	 *   Set pilot state.
 	 *
 	 *     @param state pilot state
+	 *     
+	 *     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	 *     service fails
 	 */
 
 	public void setPilotState (int state) throws RemoteException;
@@ -23,6 +26,9 @@ public interface GeneralReposInterface extends Remote{
 	 *
 	 *     @param id passenger id
 	 *     @param state passenger state
+	 *     
+	 *     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	 *     service fails
 	 */
 
 	public void setPassengerState (int id, int state) throws RemoteException;
@@ -31,6 +37,9 @@ public interface GeneralReposInterface extends Remote{
 	 *   Set hostess state.
 	 *
 	 *     @param state hostess state
+	 *     
+	 *     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	 *     service fails
 	 *     
 	 */
 
@@ -42,6 +51,9 @@ public interface GeneralReposInterface extends Remote{
 	 *     @param state hostess state
 	 *     @param passengerId id for the log
 	 *     
+	 *     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	 *     service fails
+	 *     
 	 */
 
 	public void setHostessState (int state, int passengerId) throws RemoteException;
@@ -50,6 +62,8 @@ public interface GeneralReposInterface extends Remote{
 	 *   Set inQueue number.
 	 *
 	 *     @param number number to add to inQueue
+	 *     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	 *     service fails
 	 */
 
 	public void setQueue (int number) throws RemoteException;
@@ -58,6 +72,9 @@ public interface GeneralReposInterface extends Remote{
 	 *   Set inFlight number.
 	 *
 	 *     @param number number to add to inFlight
+	 *     
+	 *     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	 *     service fails
 	 */
 
 	public void setFlight (int number) throws RemoteException;
@@ -66,6 +83,9 @@ public interface GeneralReposInterface extends Remote{
 	 *   Set inDestination number.
 	 *
 	 *     @param number number to add to inDestination
+	 *     
+	 *     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+     *     service fails
 	 */
 
 	public void setDestisnation (int number) throws RemoteException;
@@ -75,6 +95,8 @@ public interface GeneralReposInterface extends Remote{
 	 *   the plane has arrived.
 	 *
 	 *     @param message message to write in the logging file
+	 *     @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	 *     service fails
 	 */
 
 	public void reportSpecificStatus (String message) throws RemoteException;

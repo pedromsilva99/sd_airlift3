@@ -65,7 +65,6 @@ public class GeneralRepos implements GeneralReposInterface{
 	/**
 	 *   Instantiation of a general repository object.
 	 *
-	 *     @param logFileName name of the logging file
 	 */
 	public GeneralRepos () {
 		this.logFileName = "logger";
@@ -167,6 +166,13 @@ public class GeneralRepos implements GeneralReposInterface{
 	public synchronized void setDestisnation (int number) throws RemoteException{
 		inDestination += number;
 	}
+	
+	/**
+	 *  Write the header to the logging file.
+	 *
+	 *  The pilot is flying back, the passengers are going to the airport and the hostess is waiting for the flight
+	 *  Internal operation.
+	 */
 	
 	public void reportInitialStatus ()	{
 		TextFile log = new TextFile ();                      // instantiation of a text file handler

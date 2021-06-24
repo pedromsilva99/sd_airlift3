@@ -46,7 +46,7 @@ public class Passenger extends Thread{
 	 * @param passengerId passenger id
 	 * @param airport     reference to the departure airport
 	 * @param plane 	  reference to the plane
-	 * @param destAirport reference to the destination airport
+	 * 
 	 */
 
 	public Passenger(String name, int passengerId, DepAirportInterface airport, PlaneInterface plane) {

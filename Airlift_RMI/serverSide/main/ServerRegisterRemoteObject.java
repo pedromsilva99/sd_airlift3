@@ -23,6 +23,7 @@ public class ServerRegisterRemoteObject
    *        args[0] - port number for listening to service requests
    *        args[1] - name of the platform where is located the RMI registering service
    *        args[2] - port nunber where the registering service is listening to service requests
+   *        
    */
 
    public static void main(String[] args)

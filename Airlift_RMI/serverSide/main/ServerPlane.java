@@ -28,6 +28,8 @@ public class ServerPlane {
 	   *        args[0] - port number for listening to service requests
 	   *        args[1] - name of the platform where is located the RMI registering service
 	   *        args[2] - port number where the registering service is listening to service requests
+	   *        
+	   *        @param args runtime arguments
 	   */
 
 	   public static void main (String[] args)

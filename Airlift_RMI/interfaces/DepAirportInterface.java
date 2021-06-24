@@ -43,6 +43,9 @@ public interface DepAirportInterface extends Remote{
 		*  It is called by the hostess when the plane isn't ready to fly and she has to wait for passengers.
 		*
 		*  @return passengerId returns the Id from the passenger that is in front of the queue.
+		*  
+		*  @throws RemoteException if either the invocation of the remote method, or the communication with the registry
+	    *  service fails
 		*/	
 		
 		public int waitForNextPassenger() throws RemoteException;
