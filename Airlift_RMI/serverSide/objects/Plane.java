@@ -160,7 +160,7 @@ public class Plane extends Thread implements PlaneInterface{
 	*/
 	
 	@Override
-	public void waitForAllInBoard() throws RemoteException{
+	public synchronized void waitForAllInBoard() throws RemoteException{
 		int pilotState;
 		pilotState = PilotStates.WAITINGFORBOARDING;
 		repos.setPilotState (pilotState);
@@ -168,7 +168,9 @@ public class Plane extends Thread implements PlaneInterface{
 		{
 			try {
 				GenericIO.writelnString("\n\033[44mPilot Waiting for all Passengers\033[0m\n");
+				GenericIO.writelnString("\n\033[44mYOOOOOOOOOOO\033[0m" + allOnBoard + "\n");
 				wait();
+				
 			} 
 			catch (Exception e) {
 				return;
@@ -188,7 +190,7 @@ public class Plane extends Thread implements PlaneInterface{
 	*/
 	
 	@Override
-	public void informPlaneReadyToTakeOff(int nboarded) throws RemoteException{
+	public synchronized void informPlaneReadyToTakeOff(int nboarded) throws RemoteException{
 		System.out.println(nboarded);
 		while (nboarded!= nPassengers) {
 			try {
@@ -199,7 +201,7 @@ public class Plane extends Thread implements PlaneInterface{
 				return;
 			}
 		}
-		
+		System.out.print("FUCK THE POLICE");
 		int hostessState;
 		hostessState = HostessStates.READYTOFLY;
 		repos.setHostessState (hostessState);

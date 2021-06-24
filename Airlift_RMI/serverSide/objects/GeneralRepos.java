@@ -74,7 +74,7 @@ public class GeneralRepos implements GeneralReposInterface{
 		for (int i = 0; i < SimulPar.nPassengers; i++)
 			passengerState[i] = PassengerStates.GOINGTOAIRPORT;
 		hostessState = HostessStates.WAITFORFLIGHT;
-		//reportInitialStatus ();
+		reportInitialStatus ();
 	}
 	
 	/**
@@ -111,7 +111,8 @@ public class GeneralRepos implements GeneralReposInterface{
 	 *     @param id passenger ID
 	 *     
 	 */
-
+	
+	@Override
 	public synchronized void setHostessState (int state, int id) throws RemoteException{  
 		if(hostessState == HostessStates.WAITFORPASSENGER && state == HostessStates.CHECKPASSENGER)
 			reportSpecificStatus("\nFlight " + flightNumber + ": passenger " + id + " checked.");
@@ -167,8 +168,7 @@ public class GeneralRepos implements GeneralReposInterface{
 		inDestination += number;
 	}
 	
-	@Override
-	public synchronized void reportInitialStatus ()	 throws RemoteException{
+	public void reportInitialStatus ()	{
 		TextFile log = new TextFile ();                      // instantiation of a text file handler
 
 		if (!log.openForWriting (".", logFileName)){ 
@@ -194,7 +194,8 @@ public class GeneralRepos implements GeneralReposInterface{
 	 *  Internal operation.
 	 */
 	
-	public synchronized void reportStatus () throws RemoteException{
+	public synchronized void reportStatus (){
+		
 		TextFile log = new TextFile ();                      // instantiation of a text file handler
 
 		String lineStatus = "";                              // state line to be printed

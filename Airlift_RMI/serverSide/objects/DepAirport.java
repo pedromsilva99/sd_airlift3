@@ -314,7 +314,6 @@ public class DepAirport implements DepAirportInterface{
 		
 		hostessState = HostessStates.CHECKPASSENGER;
 		
-		//error
 		repos.setHostessState (hostessState,waitPassengerId );
 
 		GenericIO.writelnString("Checking Doccuments of passenger " + waitPassengerId);

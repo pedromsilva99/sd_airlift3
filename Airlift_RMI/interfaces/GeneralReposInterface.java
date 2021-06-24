@@ -79,26 +79,6 @@ public interface GeneralReposInterface extends Remote{
 
 	public void reportSpecificStatus (String message) throws RemoteException;
 	
-	
-	/**
-	 *  Write the header to the logging file.
-	 *
-	 *  The pilot is flying back, the passengers are going to the airport and the hostess is waiting for the flight
-	 *  Internal operation.
-	 */
-	
-	public void reportInitialStatus () throws RemoteException;
-	
-	/**
-	 *  Write a state line at the end of the logging file.
-	 *
-	 *  The current state of the pilot, hostess and passengers is organized in a line to be printed.
-	 *  Internal operation.
-	 */
-
-	public void reportStatus () throws RemoteException;
-	
-	
 	/**
 	 *   Operation initialization of simulation.
 	 *
