@@ -102,17 +102,17 @@ rm -f  dirPassenger.zip
 zip -rq dirPassenger.zip dirPassenger
 
 echo "Deploying and decompressing execution environments."
-mkdir -p /home/pedro/Desktop/sd_airlift3/Airlift_RMI/test/Airlift
-rm -rf /home/pedro/Desktop/sd_airlift3/Airlift_RMI/test/Airlift/*
-cp dirRegistry.zip /home/pedro/Desktop/sd_airlift3/Airlift_RMI/test/Airlift
-cp dirGeneralRepos.zip /home/pedro/Desktop/sd_airlift3/Airlift_RMI/test/Airlift
-cp dirDepAirport.zip /home/pedro/Desktop/sd_airlift3/Airlift_RMI/test/Airlift
-cp dirPlane.zip /home/pedro/Desktop/sd_airlift3/Airlift_RMI/test/Airlift
-cp dirDestAirport.zip /home/pedro/Desktop/sd_airlift3/Airlift_RMI/test/Airlift
-cp dirPilot.zip /home/pedro/Desktop/sd_airlift3/Airlift_RMI/test/Airlift
-cp dirHostess.zip /home/pedro/Desktop/sd_airlift3/Airlift_RMI/test/Airlift
-cp dirPassenger.zip /home/pedro/Desktop/sd_airlift3/Airlift_RMI/test/Airlift
-cd /home/pedro/Desktop/sd_airlift3/Airlift_RMI/test/Airlift
+mkdir -p test/Airlift
+rm -rf test/Airlift/*
+cp dirRegistry.zip test/Airlift
+cp dirGeneralRepos.zip test/Airlift
+cp dirDepAirport.zip test/Airlift
+cp dirPlane.zip test/Airlift
+cp dirDestAirport.zip test/Airlift
+cp dirPilot.zip test/Airlift
+cp dirHostess.zip test/Airlift
+cp dirPassenger.zip test/Airlift
+cd test/Airlift
 unzip -q dirRegistry.zip
 unzip -q dirGeneralRepos.zip
 unzip -q dirDepAirport.zip
